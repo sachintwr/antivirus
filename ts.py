@@ -1,4 +1,5 @@
 import time
+import random
 from pynput import mouse, keyboard
 from pynput.keyboard import Key
 import pyautogui  # For simulating tab switching and Num Lock toggle
@@ -68,7 +69,9 @@ try:
             if toggling_active:
                 print("Toggling Num Lock.")
                 pyautogui.press('numlock')  # Toggle Num Lock
-                time.sleep(0.5)  # Small delay to simulate toggling
+                delay = random.uniform(1, 5)  # Generate a random delay between 1 and 5 seconds
+                print(f"Delay time: {delay:.2f} seconds")
+                time.sleep(delay) # Small delay to simulate toggling
             # pass
             # if toggling_active:  # Stop toggling when user becomes active
             #     print("User active. Stopping Num Lock toggling.")
