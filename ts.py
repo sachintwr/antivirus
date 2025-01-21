@@ -33,6 +33,15 @@ def on_click(x, y, button, pressed):
 # Function to detect keyboard press
 def on_press(key):
     global last_activity_time, keyboard_press_count, action_performed, toggling_active
+    try:
+        if hasattr(key, 'char') and key.char == 'q':  # Press 'q' to quit
+            print("Exiting application.")
+            mouse_listener.stop()
+            keyboard_listener.stop()
+            exit(0)
+    except AttributeError:
+        pass
+    
     ignored_keys = {Key.ctrl, Key.tab, Key.num_lock, Key.space}
     if key in ignored_keys:
         return 
@@ -56,7 +65,7 @@ try:
     while True:
         # Check the time since the last activity
         current_time = time.time()
-        if current_time - last_activity_time > 60:  # No activity for 2 minutes
+        if current_time - last_activity_time > 10:  # No activity for 2 minutes
             if not action_performed:  # Perform tab switch only once per inactivity period
                 print("Switching Chrome tab.")
                 pyautogui.hotkey('ctrl', 'tab')  # Switch Chrome tabs
