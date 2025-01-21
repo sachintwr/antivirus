@@ -88,6 +88,8 @@ try:
                     pyautogui.scroll(500)  # Scroll up
                     print("Scrolling up.")
 
+                scroll_step_count += 1
+
                 if scroll_step_count >= max_scroll_steps:
                     scroll_direction = "up" if scroll_direction == "down" else "down"
                     scroll_step_count = 0  # Reset the counter
