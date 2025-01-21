@@ -10,7 +10,9 @@ mouse_click_count = 0
 keyboard_press_count = 0
 action_performed = False  # Flag to control one-time tab switch
 toggling_active = False  # Flag to control continuous Num Lock toggling
-
+scroll_direction = "down"
+scroll_step_count = 0
+max_scroll_steps = 10
 # Function to detect mouse movement
 def on_move(x, y):
     global last_activity_time, action_performed, toggling_active
@@ -72,6 +74,29 @@ try:
                 delay = random.uniform(1, 5)  # Generate a random delay between 1 and 5 seconds
                 print(f"Delay time: {delay:.2f} seconds")
                 time.sleep(delay) # Small delay to simulate toggling
+
+                screen_width, screen_height = pyautogui.size()
+                random_x = random.randint(100, screen_width - 100)
+                random_y = random.randint(100, screen_height - 100)
+                print(f"Moving mouse to ({random_x}, {random_y}).")
+                pyautogui.moveTo(random_x, random_y, duration=0.5)
+
+                if scroll_direction == "down":
+                    pyautogui.scroll(-500)  # Scroll down
+                    print("Scrolling down.")
+                else:
+                    pyautogui.scroll(500)  # Scroll up
+                    print("Scrolling up.")
+
+                if scroll_step_count >= max_scroll_steps:
+                    scroll_direction = "up" if scroll_direction == "down" else "down"
+                    scroll_step_count = 0  # Reset the counter
+                    print(f"Reversing scroll direction to {scroll_direction}.")
+
+                # if pyautogui.position()[1] >= screen_height - 10:  # Near bottom of the screen
+                #     scroll_direction = "up"
+                # elif pyautogui.position()[1] <= 10:  # Near top of the screen
+                #     scroll_direction = "down"
             # pass
             # if toggling_active:  # Stop toggling when user becomes active
             #     print("User active. Stopping Num Lock toggling.")
@@ -81,3 +106,10 @@ try:
 finally:
     mouse_listener.stop()
     keyboard_listener.stop()
+
+
+# pip install pyinstaller
+# pyinstaller --onefile --windowed ts.py # For GUI application
+# pyinstaller --onefile ts.py # For console application
+# pyinstaller --onefile --windowed --icon=your_icon.ico ts.py # For GUI application with custom icon
+
