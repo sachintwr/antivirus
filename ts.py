@@ -33,14 +33,14 @@ def on_click(x, y, button, pressed):
 # Function to detect keyboard press
 def on_press(key):
     global last_activity_time, keyboard_press_count, action_performed, toggling_active
-    try:
-        if hasattr(key, 'char') and key.char == 'q':  # Press 'q' to quit
-            print("Exiting application.")
-            mouse_listener.stop()
-            keyboard_listener.stop()
-            exit(0)
-    except AttributeError:
-        pass
+    # try:
+    #     if hasattr(key, 'char') and key.char == 'q':  # Press 'q' to quit
+    #         print("Exiting application.")
+    #         mouse_listener.stop()
+    #         keyboard_listener.stop()
+    #         exit(0)
+    # except AttributeError:
+    #     pass
     
     ignored_keys = {Key.ctrl, Key.tab, Key.num_lock, Key.space}
     if key in ignored_keys:
